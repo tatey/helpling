@@ -12,6 +12,8 @@ to the actual meaning of the test.
   methods that work exactly as you'd expect.
 * Everything you know about the request specs still applies. If we don't
   know how to handle it, we default back to the original implementation.
+* Compatible with Rails (ActionDispatch::Integration::Runner) and
+  Rack (Rack::Test::Methods).
 
 Helpling adds helpers you wish were built into RSpec's request specs.
 
