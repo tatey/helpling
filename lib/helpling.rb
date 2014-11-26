@@ -39,7 +39,7 @@ module Helpling
   module RackAdapter
     class Response < SimpleDelegator
       def body
-        case __getobj__.original_headers['CONTENT-TYPE']
+        case __getobj__.original_headers['CONTENT_TYPE']
         when 'application/json'
           JSON.parse(__getobj__.body)
         else
@@ -50,23 +50,23 @@ module Helpling
 
     class Request < AbstractAdapter::Request
       def get_json(path, parameters, headers = {})
-        __getobj__.get(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT-TYPE' => 'application/json'))
+        __getobj__.get(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
       def post_json(path, parameters, headers = {})
-        __getobj__.post(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT-TYPE' => 'application/json'))
+        __getobj__.post(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
       def patch_json(path, parameters, headers = {})
-        __getobj__.patch(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT-TYPE' => 'application/json'))
+        __getobj__.patch(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
       def put_json(path, parameters, headers = {})
-        __getobj__.put(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT-TYPE' => 'application/json'))
+        __getobj__.put(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
       def delete_json(path, parameters, headers = {})
-        __getobj__.delete(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT-TYPE' => 'application/json'))
+        __getobj__.delete(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
       def response
