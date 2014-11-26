@@ -115,12 +115,18 @@ module Helpling
   end
 
   module TestHelper
+    class UnknownAdapterError < StandardError
+    end
+
     def r
       @r ||= begin
-        if defined?(ActionDispatch::Integration::Runner) && self.class.ancestors.include?(ActionDispatch::Integration::Runner)
+        case
+        when defined?(ActionDispatch::Integration::Runner) && self.class.ancestors.include?(ActionDispatch::Integration::Runner)
           RailsAdapter::Request.new(self)
-        else
+        when defined?(Rack::Test::Methods) && self.class.ancestors.include?(Rack::Test::Methods)
           RackAdapter::Request.new(self)
+        else
+          raise UnknownAdapterError, 'could not detect rails or rack'
         end
       end
     end
