@@ -3,6 +3,39 @@ require 'helpling/version'
 require 'json'
 
 module Helpling
+  module AbstractAdapter
+    class Request < SimpleDelegator
+      def initialize(*args)
+        @headers = {}
+        super
+      end
+
+      def header key, value
+        @headers[key] = value
+      end
+
+      def get(path, parameters = nil, headers = {})
+        __getobj__.get(path, parameters, @headers.merge(headers))
+      end
+
+      def post(path, parameters = nil, headers = {})
+        __getobj__.post(path, parameters, @headers.merge(headers))
+      end
+
+      def patch(path, parameters = nil, headers = {})
+        __getobj__.patch(path, parameters, @headers.merge(headers))
+      end
+
+      def put(path, parameters = nil, headers = {})
+        __getobj__.put(path, parameters, @headers.merge(headers))
+      end
+
+      def delete(path, parameters = nil, headers = {})
+        __getobj__.delete(path, parameters, @headers.merge(headers))
+      end
+    end
+  end
+
   module RackAdapter
     class Response < SimpleDelegator
       def body
@@ -77,39 +110,6 @@ module Helpling
 
       def response
         Response.new(__getobj__.response)
-      end
-    end
-  end
-
-  module AbstractAdapter
-    class Request < SimpleDelegator
-      def initialize(*args)
-        @headers = {}
-        super
-      end
-
-      def header key, value
-        @headers[key] = value
-      end
-
-      def get(path, parameters = nil, headers = {})
-        __getobj__.get(path, parameters, @headers.merge(headers))
-      end
-
-      def post(path, parameters = nil, headers = {})
-        __getobj__.post(path, parameters, @headers.merge(headers))
-      end
-
-      def patch(path, parameters = nil, headers = {})
-        __getobj__.patch(path, parameters, @headers.merge(headers))
-      end
-
-      def put(path, parameters = nil, headers = {})
-        __getobj__.put(path, parameters, @headers.merge(headers))
-      end
-
-      def delete(path, parameters = nil, headers = {})
-        __getobj__.delete(path, parameters, @headers.merge(headers))
       end
     end
   end
