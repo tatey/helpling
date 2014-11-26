@@ -37,7 +37,7 @@ module Helpling
       end
 
       def response
-        Response.new(__getobj__.response)
+        Response.new(__getobj__.last_response)
       end
     end
   end
