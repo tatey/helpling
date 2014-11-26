@@ -39,7 +39,7 @@ module Helpling
   module RackAdapter
     class Response < SimpleDelegator
       def body
-        case __getobj__.original_headers['CONTENT_TYPE']
+        case __getobj__.original_headers['Content-Type']
         when 'application/json'
           JSON.parse(__getobj__.body)
         else
