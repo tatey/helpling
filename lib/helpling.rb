@@ -49,28 +49,34 @@ module Helpling
     end
 
     class Request < AbstractAdapter::Request
-      def get_json(path, parameters, headers = {})
-        __getobj__.get(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
+      def get_json(path, parameters = nil, headers = {})
+        __getobj__.get(path, json_dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
-      def post_json(path, parameters, headers = {})
-        __getobj__.post(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
+      def post_json(path, parameters = nil, headers = {})
+        __getobj__.post(path, json_dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
-      def patch_json(path, parameters, headers = {})
-        __getobj__.patch(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
+      def patch_json(path, parameters = nil, headers = {})
+        __getobj__.patch(path, json_dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
-      def put_json(path, parameters, headers = {})
-        __getobj__.put(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
+      def put_json(path, parameters = nil, headers = {})
+        __getobj__.put(path, json_dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
-      def delete_json(path, parameters, headers = {})
-        __getobj__.delete(path, JSON.dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
+      def delete_json(path, parameters = nil, headers = {})
+        __getobj__.delete(path, json_dump(parameters), @headers.merge(headers).merge('CONTENT_TYPE' => 'application/json'))
       end
 
       def response
         Response.new(__getobj__.last_response)
+      end
+
+      private
+
+      def json_dump(parameters)
+        parameters ? JSON.dump(parameters) : nil
       end
     end
   end
